@@ -20,6 +20,7 @@ class KNN:
             # converting categorical to numeric
             self.df['diagnosis'].unique()
             self.df['diagnosis'] = self.df['diagnosis'].map({'M': 1, 'B': 0}).astype(int)
+            # split them into dependent and independent variable
             x = self.df.iloc[:, 1:]
             y = self.df.iloc[:, 0]
             x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
@@ -29,7 +30,7 @@ class KNN:
 
     def modeling_data(self,x_train, x_test, y_train, y_test):
         try:
-            self.knn.fit(x_train, y_train)
+            self.knn.fit(x_train, y_train) # at default k value =5
             print(f'the value k=5 Training accuracy :{self.knn.score(x_train, y_train)} and testing accuracy:{self.knn.score(x_test, y_test)}')
             y_train_predit = self.knn.predict(x_train)
             y_test_predit = self.knn.predict(x_test)
@@ -62,14 +63,14 @@ class KNN:
 
     def best_k_value(self, x_train, x_test, y_train, y_test):
         try:
-            self.kns.fit(x_train, y_train)
+            self.kns.fit(x_train, y_train) # got best k value - 11
             print(f'the value k=11 Training accuracy :{self.kns.score(x_train, y_train)} and testing accuracy:{self.kns.score(x_test, y_test)}')
             y_train_predits = self.kns.predict(x_train)
             y_test_predits = self.kns.predict(x_test)
-            print(f'the Training confusion_matrix of data value  k=5 :{confusion_matrix(y_train, y_train_predits)}')
-            print(f'the testing confusion_matrix of data value k:{confusion_matrix(y_test, y_test_predits)}')
-            print(f'the Training classification_report of data value k=5:{classification_report(y_train, y_train_predits)}')
-            print(f'the testing classification_report of data value k:{classification_report(y_test, y_test_predits)}')
+            print(f'the Training confusion_matrix of data value  k=11 :{confusion_matrix(y_train, y_train_predits)}')
+            print(f'the testing confusion_matrix of data value k=11:{confusion_matrix(y_test, y_test_predits)}')
+            print(f'the Training classification_report of data value k=11:{classification_report(y_train, y_train_predits)}')
+            print(f'the testing classification_report of data value k=11:{classification_report(y_test, y_test_predits)}')
         except Exception as e:
             print(f'error in main:{e.__str__()}')
 
@@ -92,5 +93,5 @@ class KNN:
 
 
 if __name__=='__main__':
-    obj=KNN('T:/pycharm/ML/regression/breast-cancer.csv')
+    obj=KNN('T:/pycharm/ML/regression/breast-cancer.csv')# load the dataset
     obj.dataprocessing()
